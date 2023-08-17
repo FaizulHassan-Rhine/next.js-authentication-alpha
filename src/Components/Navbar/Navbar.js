@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Navbar() {
     return (
         <>
@@ -19,18 +21,19 @@ export default function Navbar() {
                             <li><a>Item 3</a></li>
                         </ul>
                     </div>
-                    <a className="btn btn-ghost normal-case text-xl">daisyUI</a>
+                    <Link href="/" className="btn btn-ghost normal-case text-xl">daisyUI</Link>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
-                        <li><a>Profile</a></li>
-                        <li><a>About</a></li>
-                        <li><a>Blog</a></li>
-                        <li><a>Dashboard</a></li>
+                        <li><Link href="/profile">Profile</Link></li>
+                        <li><Link href="/about">About</Link></li>
+                        <li><Link href="/blog">Blog</Link></li>
+                        <li><Link href="/dashboard">Dashboard</Link></li>
                     </ul>
                 </div>
-                <div className="navbar-end">
-                    <button className="btn">Login</button>
+                <div className="flex gap-4 navbar-end">
+                    <Link href="/loginForm" className="text-white bg-cyan-700 px-4 py-2 rounded-md font-bold">Login</Link>
+                    <button className="text-white bg-cyan-700 px-4 py-2 rounded-md font-bold">Logout</button>
                 </div>
             </div>
         </>
