@@ -1,6 +1,25 @@
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { signIn } from "next-auth/react";
 import { FaGithubSquare, FaGoogle } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+import auth from '@/Firebase/firebase.auth';
 const loginForm = () => {
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useSignInWithEmailAndPassword(auth);
+    console.log(user)
+    console.log(user?.user?.email)
+
+    const { register, handleSubmit } = useForm();
+    const onSubmit = data => {
+        signInWithEmailAndPassword(data.email, data.password)
+        console.log(data.email)
+    };
+
+
     return (
         <div className="p-8 lg:w-1/2 mx-auto">
             <div className="bg-white rounded-t-lg p-8">
@@ -24,14 +43,15 @@ const loginForm = () => {
             </div>
             <div className="bg-gray-100 rounded-b-lg py-12 px-4 lg:px-24">
                 <p className="text-center text-sm text-gray-500 font-light">Or sign in with credentials</p>
-                <form className="mt-6">
+                <form className="mt-6" onSubmit={handleSubmit(onSubmit)}>
                     {/* Email input */}
                     <div className="relative">
                         <input
                             className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
                             id="username"
-                            type="text"
                             placeholder="Email"
+                            type="email"
+                            {...register("email", { required: true })}
                         />
                         <div className="absolute left-0 inset-y-0 flex items-center">
 
@@ -46,6 +66,7 @@ const loginForm = () => {
                             id="password"
                             type="password"
                             placeholder="Password"
+                            {...register("password", { required: true })}
                         />
                         <div className="absolute left-0 inset-y-0 flex items-center">
 

@@ -1,6 +1,13 @@
 import Link from "next/link";
+import { useSession, signIn, signOut } from "next-auth/react"
+// import auth from "@/Firebase/firebase.auth";
+// import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function Navbar() {
+    // const [user, loading, error] = useAuthState(auth);
+    // console.log(user)
+
+    const { data: session } = useSession()
     return (
         <>
             <div className="navbar bg-base-100 shadow-xl rounded-lg">
@@ -32,8 +39,11 @@ export default function Navbar() {
                     </ul>
                 </div>
                 <div className="flex gap-4 navbar-end">
-                    <Link href="/loginForm" className="text-white bg-cyan-700 px-4 py-2 rounded-md font-bold">Login</Link>
-                    <button className="text-white bg-cyan-700 px-4 py-2 rounded-md font-bold">Logout</button>
+                    {session?.user ?
+                        <button onClick={() => signOut()} className="text-white bg-cyan-700 px-4 py-2 mr-4 rounded-md font-bold">Logout</button> :
+                        <Link href="/loginForm" className="text-white bg-cyan-700 px-4 py-2 mr-4 rounded-md font-bold">Login</Link>
+
+                    }
                 </div>
             </div>
         </>
